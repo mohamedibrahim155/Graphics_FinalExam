@@ -162,6 +162,16 @@ void Mesh::MeshDraw(Shader* shader)
             shader->setInt("opacity_Texture", 2);
             meshMaterial->alphaTexture->Bind();
         }
+
+        if (isCutOut)
+        {
+            shader->setBool("isCutout", true);
+
+        }
+        else
+        {
+            shader->setBool("isCutout", false);
+        }
     }
     else if (shader->shaderType == ShaderType::SOLID)
     {

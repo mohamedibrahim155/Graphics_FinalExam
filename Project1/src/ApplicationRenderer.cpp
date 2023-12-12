@@ -1078,6 +1078,12 @@ void ApplicationRenderer::Start()
 
     Light TorchLight1;
     TorchLight1.Initialize(torch1PointLight,POINT_LIGHT, 0.5f);
+    TorchLight1.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight1.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight1.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight1.quadratic = 0.01f;
+    TorchLight1.SetColor(1, 0.6f, 0.2, 1);
+
     lightManager.AddNewLight(TorchLight1);
 
     ////Light 2
@@ -1093,6 +1099,12 @@ void ApplicationRenderer::Start()
 
     Light TorchLight2;
     TorchLight2.Initialize(torch2DebugModel, POINT_LIGHT, 0.5f);
+    TorchLight2.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight2.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight2.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight2.quadratic = 0.01f;
+    TorchLight2.SetColor(1, 0.6f, 0.2, 1);
+
     TorchLight2.SetColor(glm::vec4(1,0.5f,0,1));
 
     lightManager.AddNewLight(TorchLight2);
@@ -1112,7 +1124,11 @@ void ApplicationRenderer::Start()
     Light TorchLight3;
     TorchLight3.Initialize(torch3DebugModel, POINT_LIGHT, 0.5f);
     TorchLight3.SetColor(glm::vec4(1, 0.5f, 0, 1));
-
+    TorchLight3.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight3.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight3.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight3.quadratic = 0.01f;
+    TorchLight3.SetColor(1, 0.6f, 0.2, 1);
     lightManager.AddNewLight(TorchLight3);
 
     ////Light 4
@@ -1129,6 +1145,12 @@ void ApplicationRenderer::Start()
     Light TorchLight4;
     TorchLight4.Initialize(torch4DebugModel, POINT_LIGHT, 0.5f);
     TorchLight4.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    TorchLight4.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight4.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight4.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight4.quadratic = 0.01f;
+    TorchLight4.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight4);
 
@@ -1147,6 +1169,12 @@ void ApplicationRenderer::Start()
     Light TorchLight5;
     TorchLight5.Initialize(torch5DebugModel, POINT_LIGHT, 0.75f);
     TorchLight5.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    TorchLight5.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight5.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight5.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight5.quadratic = 0.01f;
+    TorchLight5.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight5);
 
@@ -1169,7 +1197,14 @@ void ApplicationRenderer::Start()
 
     Light TorchLight6;
     TorchLight6.Initialize(torch5DebugModel, POINT_LIGHT, 0.75f);
+    
     TorchLight6.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    TorchLight6.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight6.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight6.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight6.quadratic = 0.01f;
+    TorchLight6.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight6);
 
@@ -1190,6 +1225,12 @@ void ApplicationRenderer::Start()
     TorchLight7.Initialize(torch7DebugModel, POINT_LIGHT, 0.75f);
     TorchLight7.SetColor(glm::vec4(1, 0.5f, 0, 1));
 
+    TorchLight7.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight7.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight7.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight7.quadratic = 0.01f;
+    TorchLight7.SetColor(1, 0.6f, 0.2, 1);
+
     lightManager.AddNewLight(TorchLight7);
 
 
@@ -1197,6 +1238,7 @@ void ApplicationRenderer::Start()
     Torch8->transform.SetPosition(glm::vec3(130.0f, 0.4f, 13.8f));
     Torch8->transform.SetScale(glm::vec3(0.05f));
     render.AddModelsAndShader(Torch8, defaultShader);
+
 
     Model* torch8DebugModel = new Model(*Sphere);
     torch8DebugModel->transform.SetPosition(Torch8->transform.position + yOffset);
@@ -1206,6 +1248,13 @@ void ApplicationRenderer::Start()
     Light TorchLight8;
     TorchLight8.Initialize(torch8DebugModel, POINT_LIGHT, 0.75f);
     TorchLight8.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+
+    TorchLight8.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight8.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight8.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight8.quadratic = 0.01f;
+    TorchLight8.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight8);
 
@@ -1219,11 +1268,19 @@ void ApplicationRenderer::Start()
     Model* torch9DebugModel = new Model(*Sphere);
     torch9DebugModel->transform.SetPosition(Torch9->transform.position + yOffset);
     torch9DebugModel->transform.SetScale(glm::vec3(0.5f));
+
+
     render.AddModelsAndShader(torch9DebugModel, lightShader);
 
     Light TorchLight9;
     TorchLight9.Initialize(torch9DebugModel, POINT_LIGHT, 0.75f);
     TorchLight9.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    TorchLight9.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight9.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight9.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight9.quadratic = 0.01f;
+    TorchLight9.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight9);
 
@@ -1234,10 +1291,19 @@ void ApplicationRenderer::Start()
 
 
 
+    Model* plane = new Model("Models/Plane/Plane.obj");
+    std::string texurepath = "Models/Plane/FireTexture.png";
+    Texture* alpha = new Texture(texurepath);
 
+    alpha->type = "diffuse_Texture";
 
+    plane->meshes[0]->meshMaterial->diffuseTexture = alpha;
 
+    alpha->type = "opacity_Texture";
+    plane->meshes[0]->meshMaterial->alphaTexture = alpha;
+    plane->transform.SetPosition(glm::vec3(0, 1, 0));
 
+    render.AddModelsAndShader(plane, defaultShader);
 #pragma region Lights
 
     Model* directionLightModel = new Model(*Sphere);
