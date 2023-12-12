@@ -370,6 +370,14 @@ void ApplicationRenderer::Start()
         render.AddModelsAndShader(copyfloorType4, defaultShader);
     }
 
+
+    //  Main Gate  Floor
+    Model* mainGateFloor = new Model(*floorType4);
+    mainGateFloor->transform.SetPosition(glm::vec3(68.75f,0.2f,-6.5f));
+    mainGateFloor->transform.SetScale(glm::vec3(0.0125f));
+    render.AddModelsAndShader(mainGateFloor, defaultShader);
+
+
 #pragma endregion
 
 #pragma region Walls
@@ -438,8 +446,376 @@ void ApplicationRenderer::Start()
     }
 
 
-    offset = glm::vec3(12.5f,0,-18.75f); // bottom left to top  Left Connection left walls
+    // Bottom left to top Left  walls connection
+    for (size_t i = 0; i < 3; i++) 
+
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+        offset = glm::vec3(12.5f, 0, -18.75f);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, -90, 0);
+
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetRotation(rotation);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+
+        offset = glm::vec3(18.75f, 0, -25);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, 90, 0);
+
+       
+        if (i == 1)
+        {
+            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            copyWallArchWayType2->transform.SetPosition(position);
+            copyWallArchWayType2->transform.SetRotation(rotation);
+            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+
+            copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetRotation(rotation);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+    }
+
+
+
+    // Top left GRID  (Down walls)
+    offset = glm::vec3(0, 0, -25); 
+    for (size_t i = 0; i < 7; i++)
+    {
+        if (i == 3)
+        {
+            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            copyWallArchWayType2->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, 0) + offset);
+            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, 0) + offset);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+
+    }
+
+
+    offset = glm::vec3(-6.25f, 0, -62.5f);  //Up  walls
+    for (size_t i = 0; i < 7; i++)
+    {
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, 0) + offset);
+            copyWallType3->transform.SetRotation(glm::vec3(0, 180, 0));
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+    }
+
+
+    // Left and right walls
+    for (size_t i = 0; i < 6; i++)
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+        
+        offset = glm::vec3(-6.25f, 0, -56.25f);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, -90, 0);
+
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetRotation(rotation);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+
+       
+        offset = glm::vec3(37.5f, 0, -62.5f);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, 90, 0);
+
+        if (i == 2)
+        {
+            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            copyWallArchWayType2->transform.SetPosition(position);
+            copyWallArchWayType2->transform.SetRotation(rotation);
+            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+          
+            copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetRotation(rotation);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+    } 
+
+
+    //  Top and Bottom Connection to Middle Room Walls
+    for (size_t i = 0; i < 5; i++)
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+
+        offset = glm::vec3(25, 0, -12.5f);
+        position = glm::vec3(i * 6.25f, 0.2f, 0) + offset;
+        rotation = glm::vec3(0, 0, 0);  
+
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+
+       
+        offset = glm::vec3(18.75f, 0, -18.75f);
+        position = glm::vec3(i * 6.25f, 0.2f, 0) + offset;
+        rotation = glm::vec3(0, 180, 0);
+
+        copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetRotation(rotation);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+    }
+
+
+    // Middle ROOM (Down and Up walls)
+    for (size_t i = 0; i < 5; i++)
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+      
+        offset = glm::vec3(56.25f, 0, -12.5f);
+        position = glm::vec3(i * 6.25f, 0.2f, 0) + offset;
+        rotation = glm::vec3(0, 0, 0);
+
+        if (i == 2)
+        {
+            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            copyWallArchWayType2->transform.SetPosition(position);
+            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+         
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+
+     
+        offset = glm::vec3(50, 0, -31.25f);
+        position = glm::vec3(i * 6.25f, 0.2f, 0) + offset;
+        rotation = glm::vec3(0, 180, 0);
+
+        
+        if (i == 2)
+        {
+            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            copyWallArchWayType2->transform.SetPosition(position);
+            copyWallArchWayType2->transform.SetRotation(rotation);
+            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+            
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetRotation(rotation);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+    }
+
+
+    // Middle ROOM (LEFT and RIGHT walls)
     for (size_t i = 0; i < 3; i++)
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+        // Case 1: offset = glm::vec3(50, 0, -25);
+        offset = glm::vec3(50, 0, -25);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, -90, 0);
+
+        // Check if it's the position for the archway
+        if (i == 2)
+        {
+            // Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            // copyWallArchWayType2->transform.SetPosition(position);
+            // copyWallArchWayType2->transform.SetRotation(rotation);
+            // copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            // render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+            // Regular wall
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetRotation(rotation);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+
+        // Case 2: offset = glm::vec3(81.25f, 0, -31.25f);
+        offset = glm::vec3(81.25f, 0, -31.25f);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, 90, 0);
+
+        // Check if it's the position for the archway
+        if (i == 2)
+        {
+            // Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            // copyWallArchWayType2->transform.SetPosition(position);
+            // copyWallArchWayType2->transform.SetRotation(rotation);
+            // copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            // render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+            // Regular wall
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetRotation(rotation);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+    }
+
+
+    // Middle ROOM to left bottom Conenction Walls
+    for (size_t i = 0; i < 5; i++)
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+
+        offset = glm::vec3(87.5f, 0, -12.5f);
+        position = glm::vec3(i * 6.25f, 0.2f, 0) + offset;
+        rotation = glm::vec3(0, 0, 0);
+
+
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+
+        offset = glm::vec3(81.25f, 0, -18.75f);
+        position = glm::vec3(i * 6.25f, 0.2f, 0) + offset;
+        rotation = glm::vec3(0, 180, 0);
+
+         copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetRotation(rotation);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+
+    }
+
+    // Right bottom ROOM to Righ top ROOM  connection  to left bottom Conenction Walls
+    for (size_t i = 0; i < 3; i++)
+    {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        glm::vec3 offset;
+
+        offset = glm::vec3(118.75f, 0, -25);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, 90, 0);
+
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(position);
+        copyWallType3->transform.SetRotation(rotation);
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+
+      
+        offset = glm::vec3(112.5, 0, -18.75);
+        position = glm::vec3(0, 0.2f, i * 6.25f) + offset;
+        rotation = glm::vec3(0, -90, 0);
+
+       
+        if (i == 1)
+        {
+              Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+              copyWallArchWayType2->transform.SetPosition(position);
+              copyWallArchWayType2->transform.SetRotation(rotation);
+              copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+             render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(position);
+            copyWallType3->transform.SetRotation(rotation);
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+    }
+
+
+    offset = glm::vec3(100, 0, 31.5f);
+    for (size_t i = 0; i < 7; i++)
+    {
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(glm::vec3(i*6.25f,0.2f,0) + offset);
+        copyWallType3->transform.SetRotation(glm::vec3(0));
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
+    }
+
+
+    offset = glm::vec3(93.5f, 0, -6.25f);
+    for (size_t i = 0; i < 7; i++)
+    {
+        if (i == 3)
+        {
+            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
+            copyWallArchWayType2->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, 0) + offset);
+            copyWallArchWayType2->transform.SetRotation(glm::vec3(0, 180, 0));
+            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
+        }
+        else
+        {
+            Model* copyWallType3 = new Model(*WallType3);
+            copyWallType3->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, 0) + offset);
+            copyWallType3->transform.SetRotation(glm::vec3(0, 180, 0));
+            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyWallType3, defaultShader);
+        }
+       
+    }
+
+
+    offset = glm::vec3(93.5f,0, 0);
+
+    for (size_t i = 0; i < 6; i++)
     {
         Model* copyWallType3 = new Model(*WallType3);
         copyWallType3->transform.SetPosition(glm::vec3(0, 0.2f, i * 6.25f) + offset);
@@ -448,29 +824,17 @@ void ApplicationRenderer::Start()
         render.AddModelsAndShader(copyWallType3, defaultShader);
     }
 
-    offset = glm::vec3(18.75f, 0, -25); // bottom left to top Left Connection Right walls
-    for (size_t i = 0; i < 3; i++)
+
+    offset = glm::vec3(137.25f, 0, -6.25f);
+
+    for (size_t i = 0; i < 6; i++)
     {
-        if (i ==1)
-        {
-            Model* copyWallArchWayType2 = new Model(*WallArchWayType2);
-            copyWallArchWayType2->transform.SetPosition(glm::vec3(0, 0.2f, i * 6.25f) + offset);
-            copyWallArchWayType2->transform.SetRotation(glm::vec3(0, 90, 0));
-            copyWallArchWayType2->transform.SetScale(glm::vec3(0.0125f));
-            render.AddModelsAndShader(copyWallArchWayType2, defaultShader);
-        }
-        else
-        {
-            Model* copyWallType3 = new Model(*WallType3);
-            copyWallType3->transform.SetPosition(glm::vec3(0, 0.2f, i * 6.25f) + offset);
-            copyWallType3->transform.SetRotation(glm::vec3(0, 90, 0));
-            copyWallType3->transform.SetScale(glm::vec3(0.0125f));
-            render.AddModelsAndShader(copyWallType3, defaultShader);
-        }
-        
+        Model* copyWallType3 = new Model(*WallType3);
+        copyWallType3->transform.SetPosition(glm::vec3(0, 0.2f, i * 6.25f) + offset);
+        copyWallType3->transform.SetRotation(glm::vec3(0, 90, 0));
+        copyWallType3->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyWallType3, defaultShader);
     }
-
-
 
 #pragma endregion
 
