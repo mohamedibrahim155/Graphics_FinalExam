@@ -51,6 +51,7 @@ public:
 	
 	void Start();
 	void PreRender();
+	void ImGUIRender();
 	void Render();
 	void PostRender();
 	void Clear();
@@ -82,6 +83,7 @@ private:
 	ImGuiIO io;
 
 	Model* defaultBox;
+	Model* testModel;
 
 	LoadModelsExternal m_loadModels;
 
@@ -102,5 +104,7 @@ private:
 	 bool cameraMoveToTarget;
 
 	 bool isTestingModel;
+
+	 float xPos, yPos, zPos;
 };
 

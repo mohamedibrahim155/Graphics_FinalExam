@@ -202,28 +202,83 @@ void ApplicationRenderer::Start()
 #pragma region Floors
     std::string dungeonTexturePath = "Models/Exam_Models/3D_models/3D_models/z_Dungeon_Textures/Dungeons_2_Texture_01_A.png";
 
-    Model* floorType4 = new Model("Models/Exam_Models/3D_models/3D_models/Floors/SM_Env_Dwarf_Floor_04.ply");
+    Model* floorType4 = new Model("Models/Exam_Models/3D_models/3D_models/Floors/SM_Env_Dwarf_Floor_08.ply");
     floorType4->meshes[0]->meshMaterial->diffuseTexture = new Texture(dungeonTexturePath);
     floorType4->transform.SetPosition(glm::vec3(0,0.1f,0));
     floorType4->transform.SetScale(glm::vec3(0.025f));
-    render.AddModelsAndShader(floorType4, defaultShader);
+   // render.AddModelsAndShader(floorType4, defaultShader);
 
 
 
     float scaleOffset = 0.025f;
+    // bottom  left
 
-    for (size_t i = 0; i < 6; i++)
+    for (size_t i = 0; i < 7; i++)  
     {
-        for (size_t j = 0; j < 7; j++)
+        for (size_t j = 0; j < 6; j++)
         {
+            
             Model* copyfloorType4 = new Model(*floorType4);
-            copyfloorType4->transform.SetPosition(glm::vec3(i+ 13.5f, 0.1f, j ));
-            copyfloorType4->transform.SetScale(glm::vec3(0.025f));
+            copyfloorType4->transform.SetPosition(glm::vec3(i*6.25f, 0.2f, j* 6.25f));
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
             render.AddModelsAndShader(copyfloorType4, defaultShader);
            
         }
     }
 
+    glm::vec3 offset(100, 0, 0); // bottom  right
+    for (size_t i = 0; i < 7; i++)
+    {
+        for (size_t j = 0; j < 6; j++)
+        {
+
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, j * 6.25f)+ offset);
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+
+        }
+    }
+
+
+    offset = glm::vec3(100, 0, -56.25f); // top  right
+    for (size_t i = 0; i < 7; i++)
+    {
+        for (size_t j = 0; j < 6; j++)
+        {
+
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, j * 6.25f) + offset);
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+
+        }
+    }
+
+    offset = glm::vec3(0, 0, -56.25f);  // top left
+    for (size_t i = 0; i < 7; i++)
+    {
+        for (size_t j = 0; j < 6; j++)
+        {
+
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(i * 6.25f, 0.2f, j * 6.25f) + offset);
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+
+        }
+    }
+
+    for (size_t i = 1; i < 4; i++)
+    {
+        Model* copyfloorType4 = new Model(*floorType4);
+        copyfloorType4->transform.SetPosition(glm::vec3(18.75f, 0.2f, i * -6.25f));
+        copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyfloorType4, defaultShader);
+    }
+
+
+   
 
 #pragma endregion
 
@@ -307,6 +362,30 @@ void ApplicationRenderer::PreRender()
     StencilShader->setMat4("view", _view);
 }
 
+void ApplicationRenderer::ImGUIRender()
+{
+    ImGui::Begin("Media Player Lite!");
+    // ImGui::SetWindowFontScale(2.0f);
+    ImGui::SetWindowSize(ImVec2(800, 800));
+
+    //add a intro text
+    ImGui::Text("KAIZOKU ENGINE");
+   
+    ImGui::NewLine();
+    ImGui::PushItemWidth(100);
+    ImGui::InputFloat("X Position", &xPos, 0.1f);
+    ImGui::SameLine();
+    ImGui::InputFloat("Y Position", &yPos, 0.1f);
+    ImGui::SameLine();
+    ImGui::InputFloat("Z Position", &zPos, 0.1f);
+    ImGui::Text("POSITION");
+    CheckingValues(testModel, xPos, yPos, zPos);
+
+    //framerate
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+    ImGui::End();
+}
+
 void ApplicationRenderer::Render()
 {
     Start();
@@ -328,17 +407,7 @@ void ApplicationRenderer::Render()
         ProcessInput(window);
 
 
-        ImGui::Begin("Media Player Lite!");
-                    // ImGui::SetWindowFontScale(2.0f);
-                    ImGui::SetWindowSize(ImVec2(800, 800));
-        
-                    //add a intro text
-                    ImGui::Text("KAIZOKU ENGINE");
-        
-        
-                     //framerate
-                    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-                    ImGui::End();
+        ImGUIRender();
 
         PreRender(); //Update call BEFORE  DRAW
 
@@ -415,9 +484,9 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
 
 void ApplicationRenderer::CheckingValues(Model* testModel, float x, float y, float z)
 {
-    if (isTestingModel)
+    if (isTestingModel && testModel!=nullptr)
     {
-        testModel->transform.position = glm::vec3(x, y, z);
+        testModel->transform.SetPosition(glm::vec3(x,y,z));
 
     }
 }
