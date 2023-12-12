@@ -7,7 +7,9 @@
 // returns the view matrix calculated using Euler Angles and the LookAt Matrix
 glm::mat4 Camera::GetViewMatrix()
 {
-    return glm::lookAt(Position, Position + Front, Up);
+    glm::mat4 viewMat = glm::mat4(1.0f);
+    viewMat = glm::lookAt(transform.position, transform.position + transform.GetForward(), transform.GetUp());
+    return viewMat;
 }
 
 // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
@@ -15,13 +17,13 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
 {
     float velocity = MovementSpeed * deltaTime;
     if (direction == FORWARD)
-        Position += Front * velocity;
+        transform.position += transform.GetForward() * velocity;
     if (direction == BACKWARD)
-        Position -= Front * velocity;
+        transform.position -= transform.GetForward() * velocity;
     if (direction == LEFT)
-        Position -= Right * velocity;
+        transform.position -= transform.GetRight() * velocity;
     if (direction == RIGHT)
-        Position += Right * velocity;
+        transform.position += transform.GetRight() * velocity;
 }
 
 // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
@@ -30,20 +32,26 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     xoffset *= MouseSensitivity;
     yoffset *= MouseSensitivity;
 
-    Yaw += xoffset;
-    Pitch += yoffset;
+    transform.rotation.y -= xoffset;
+    transform.rotation.x += yoffset;
 
     // make sure that when pitch is out of bounds, screen doesn't get flipped
     if (constrainPitch)
     {
-        if (Pitch > 89.0f)
-            Pitch = 89.0f;
-        if (Pitch < -89.0f)
-            Pitch = -89.0f;
+        if (transform.rotation.z == 180 || transform.rotation.z == -180)
+        {
+            if (transform.rotation.x > 89.0f + 180)	transform.rotation.x = 89.0f + 180;
+            if (transform.rotation.x < -89.0f - 180)	transform.rotation.x = -89.0f - 180;
+        }
+        else
+        {
+            if (transform.rotation.x > 89.0f)	transform.rotation.x = 89.0f;
+            if (transform.rotation.x < -89.0f)	transform.rotation.x = -89.0f;
+        }
     }
 
     // update Front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
+    transform.SetRotation(transform.rotation);
 }
 
 // processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
@@ -61,38 +69,17 @@ void Camera::updateCameraVectors()
 {
     // calculate the new Front vector
     glm::vec3 front;
-    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    front.y = sin(glm::radians(Pitch));
-    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-    Front = glm::normalize(front);
+    front.x = cos(glm::radians(transform.rotation.y)) * cos(glm::radians(transform.rotation.x));
+    front.y = sin(glm::radians(transform.rotation.x));
+    front.z = sin(glm::radians(transform.rotation.y)) * cos(glm::radians(transform.rotation.x));
+    transform.SetForward(glm::normalize(front));
 
-    // Recalculate the Right and Up vectors
-    Right = glm::normalize(glm::cross(Front, WorldUp));
-    Up = glm::normalize(glm::cross(Right, Front));
+    
 
     
 }
 
-void Camera::SetCameraPosition(const glm::vec3& position)
+Transform* Camera::GetTransform()
 {
-    Position = position;
-}
-
-void Camera::SetCameraRotation(const glm::vec3& rotation)
-{
-    Pitch = rotation.x;
-    Yaw = rotation.y;
-
-    SetCameraForward();
-}
-
-void Camera::SetCameraForward()
-{
-    glm::vec3 direction;
-
-    direction.x = glm::cos(glm::radians(Yaw)) * glm::cos(glm::radians(Pitch));
-    direction.y = glm::sin(glm::radians(Pitch));
-    direction.z = glm::sin(glm::radians(Yaw)) * glm::cos(glm::radians(Pitch));
-
-    Front = glm::normalize(direction);
+    return &transform;
 }

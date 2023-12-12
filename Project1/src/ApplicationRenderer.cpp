@@ -176,8 +176,7 @@ void ApplicationRenderer::Start()
     Model* Sphere = new Model((char*)"Models/DefaultSphere/Sphere_1_unit_Radius.ply", true);
 
 
-    //render.AddModelsAndShader(CamPlaceholder, defaultShader);
-     Sphere->transform.position.x += 2;
+
 
     
 
@@ -190,31 +189,16 @@ void ApplicationRenderer::Start()
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-     modelData = loadModelDataFromFile("Model.txt");
-     CityModel = new Model("Models/White//White.obj",false);
-     CityModel->transform.SetPosition(glm::vec3(0,-15,0));
-     CityModel->transform.SetRotation(glm::vec3(0,0,0));
-     CityModel->transform.SetScale(glm::vec3(0.1f));
-     render.AddModelsAndShader(CityModel, defaultShader);
-
-     cityPhysics = new PhysicsObject(CityModel);
-     cityPhysics->Initialize(MESH_TRIANGLES,false,STATIC);
-     PhysicsEngine.AddPhysicsObjects(cityPhysics);
 
 
 
 
 
 
-   //  DrawDebugModelAABB(cityPhysics->GetModelAABB());
 
 
-     //////////////////////////////////////////////////////////
-     //////SPACE SHIP ENTITY
-     spaceshipEntity = new SpaceShip(render, defaultShader, PhysicsEngine,camera);
-     spaceshipEntity->LoadModel();
+
+
 
 
 #pragma region Lights
@@ -298,14 +282,12 @@ void ApplicationRenderer::Render()
 
 
         defaultShader->Bind();
-       // material.SetMaterialProperties(*defaultShader);
-     //   lightManager.UpdateUniformValuesToShader(defaultShader);
         lightManager.UpdateUniformValues(defaultShader->ID);
        
 
          defaultShader->setMat4("projection", _projection);
          defaultShader->setMat4("view", _view);
-         defaultShader->setVec3("viewPos", camera.Position.x, camera.Position.y, camera.Position.z);
+         defaultShader->setVec3("viewPos", camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
          defaultShader->setFloat("time", scrollTime);
          defaultShader->setBool("isDepthBuffer", false);
 
@@ -352,13 +334,7 @@ void ApplicationRenderer::Render()
 
 void ApplicationRenderer::PostRender()
 {
-   // glDisable(GL_BLEND);
-
-    PhysicsEngine.Update(deltaTime);
-
-    spaceshipEntity->Update(deltaTime);
- 
-  //  DrawDebugModelAABB(spaceshipEntity->SpaceShipPhysics->UpdateAABB());
+   
 }
 
 void ApplicationRenderer::Clear()
@@ -379,70 +355,24 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
-     //   camera.ProcessKeyboard(BACKWARD, deltaTime * cameraSpeed);
+        camera.ProcessKeyboard(BACKWARD, deltaTime * cameraSpeed);
     }
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
-      //  camera.ProcessKeyboard(LEFT, deltaTime * cameraSpeed);
+        camera.ProcessKeyboard(LEFT, deltaTime * cameraSpeed);
 
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
-      //  camera.ProcessKeyboard(RIGHT, deltaTime * cameraSpeed);
+        camera.ProcessKeyboard(RIGHT, deltaTime * cameraSpeed);
 
     }
 
-   // spaceshipEntity->SpaceShipInputs(window,deltaTime);
+ 
 
 
 }
-
-void ApplicationRenderer::DrawDebugModelAABB( const cAABB& aabb)
-{
-    
-  
-        glm::vec3 targetExtents = 0.5f * (aabb.maxV - aabb.minV);
-        glm::vec3 center = 0.5f * (aabb.minV + aabb.maxV);
-
-        Model* debugCube = new Model(*defaultBox);
-        debugCube->transform.SetPosition(center);
-        debugCube->transform.SetRotation(glm::vec3(0));
-        debugCube->transform.SetScale(targetExtents);
-        //render.AddModelsAndShader(debugCube, defaultShader);
-        debugCube->meshes[0]->isWireFrame = true;
-        debugCube->Draw(*lightShader);
-
-
-
-    
-}
-
-void ApplicationRenderer::DrawDebugBvhNodeAABB(BvhNode* node)
-{
-    if (node ==nullptr)
-    {
-        return;
-    }
-    //if (node->nodeIndex == recusiveCount)
-    //{
-    //    DrawDebugModelAABB(node->GetModelAABB());
-    //   return;
-    //}
-
-    if (node->trianglesIndex.size() != 0)
-    {
-        DrawDebugModelAABB(node->UpdateAABB());
-    }
-
-    if (node->leftChild == nullptr) return;
-
-    DrawDebugBvhNodeAABB(node->leftChild);
-    DrawDebugBvhNodeAABB(node->rightChild);
-
-
-}
-
 
 
 
@@ -468,51 +398,7 @@ void ApplicationRenderer::DrawDebugBvhNodeAABB(BvhNode* node)
          InputManager::GetInstance().OnKeyHeld(key);
      }
 
-         /*if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-         {
-             recusiveCount--;
-         }
-         if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-         {
-             recusiveCount++;
-         }
-         if (key == GLFW_KEY_R && action == GLFW_PRESS)
-         {
-             
-            spaceshipEntity->model->transform.SetRotation(glm::vec3(spaceshipEntity->model->transform.rotation.x, spaceshipEntity->model->transform.rotation.y + 20, spaceshipEntity->model->transform.rotation.z));
-             
-         }
-         if (key == GLFW_KEY_T && action == GLFW_PRESS)
-         {
-
-             spaceshipEntity->model->transform.SetRotation(glm::vec3(spaceshipEntity->model->transform.rotation.x, spaceshipEntity->model->transform.rotation.y - 20, spaceshipEntity->model->transform.rotation.z));
-
-         }
-         if (key == GLFW_KEY_Y && action == GLFW_PRESS)
-         {
-
-             spaceshipEntity->model->transform.SetRotation(glm::vec3(spaceshipEntity->model->transform.rotation.x + 20, spaceshipEntity->model->transform.rotation.y , spaceshipEntity->model->transform.rotation.z));
-
-         }
-         if (key == GLFW_KEY_U && action == GLFW_PRESS)
-         {
-
-             spaceshipEntity->model->transform.SetRotation(glm::vec3(spaceshipEntity->model->transform.rotation.x - 20, spaceshipEntity->model->transform.rotation.y , spaceshipEntity->model->transform.rotation.z));
-
-         }
-
-         if (key == GLFW_KEY_I && action == GLFW_PRESS)
-         {
-
-             spaceshipEntity->model->transform.SetRotation(glm::vec3(spaceshipEntity->model->transform.rotation.x , spaceshipEntity->model->transform.rotation.y, spaceshipEntity->model->transform.rotation.z + 20));
-
-         }
-         if (key == GLFW_KEY_O && action == GLFW_PRESS)
-         {
-
-             spaceshipEntity->model->transform.SetRotation(glm::vec3(spaceshipEntity->model->transform.rotation.x , spaceshipEntity->model->transform.rotation.y, spaceshipEntity->model->transform.rotation.z - 20));
-
-         }*/
+    
          
  }
 

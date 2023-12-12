@@ -142,11 +142,6 @@
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
     <ClCompile Include="src\InputManager.cpp" />
-    <ClCompile Include="src\SpaceShip.cpp" />
-    <ClCompile Include="src\PhysicsCollisionTypes.cpp" />
-    <ClCompile Include="src\BvhNode.cpp" />
-    <ClCompile Include="src\BvhTree.cpp" />
-    <ClCompile Include="src\BvhNode.h" />
     <ClCompile Include="src\CameraMovement.cpp" />
     <ClCompile Include="Extern\imGui\imgui.cpp" />
     <ClCompile Include="Extern\imGui\imgui_demo.cpp" />
@@ -166,8 +161,6 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\material.cpp" />
     <ClCompile Include="src\mesh.cpp" />
-    <ClCompile Include="src\PhysicsEngine.cpp" />
-    <ClCompile Include="src\PhysicsObject.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\model.cpp" />
@@ -181,8 +174,6 @@
     <ClInclude Include="..\stb_image.h" />
     <ClInclude Include="src\iInputListener.h" />
     <ClInclude Include="src\InputManager.h" />
-    <ClInclude Include="src\SpaceShip.h" />
-    <ClInclude Include="src\BvhTree.h" />
     <ClInclude Include="src\CameraMovement.h" />
     <ClInclude Include="Extern\imGui\imconfig.h" />
     <ClInclude Include="Extern\imGui\imgui.h" />
@@ -205,9 +196,6 @@
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\model.h" />
-    <ClInclude Include="src\PhysicsCollisionTypes.h" />
-    <ClInclude Include="src\PhysicsEngine.h" />
-    <ClInclude Include="src\PhysicsObject.h" />
     <ClInclude Include="src\Random.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />

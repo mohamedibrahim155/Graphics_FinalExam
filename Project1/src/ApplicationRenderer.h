@@ -11,12 +11,10 @@
 #include "Transform.h"
 #include"LightManager.h"
 #include "Random.h"
-#include "PhysicsEngine.h"
 #include "Skybox.h"
 #include "LoadModelsExternal.h"
 #include "GraphicsRender.h"
 #include "CameraMovement.h"
-#include "SpaceShip.h"
 #include "InputManager.h"
 struct ModelData
 {
@@ -55,9 +53,6 @@ public:
 
 	void ProcessInput(GLFWwindow* window);
 	
-	void DrawDebugModelAABB(const cAABB& aabb);
-	void DrawDebugBvhNodeAABB(BvhNode* node);
-
 	int recusiveCount = 0;
 
 
@@ -79,15 +74,9 @@ private:
 
 
 	Model* defaultBox;
-	Model* CityModel;
 
 	LoadModelsExternal m_loadModels;
 
-	PhysicsEngine PhysicsEngine;
-	PhysicsObject* cityPhysics;
-
-
-	SpaceShip* spaceshipEntity;
 
 	 int windowWidth;
 	 int  WindowHeight;
