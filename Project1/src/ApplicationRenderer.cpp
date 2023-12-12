@@ -269,7 +269,7 @@ void ApplicationRenderer::Start()
         }
     }
 
-    for (size_t i = 1; i < 4; i++)
+    for (size_t i = 1; i < 4; i++)  // left  connection to bottom to top
     {
         Model* copyfloorType4 = new Model(*floorType4);
         copyfloorType4->transform.SetPosition(glm::vec3(18.75f, 0.2f, i * -6.25f));
@@ -278,7 +278,97 @@ void ApplicationRenderer::Start()
     }
 
 
-   
+    offset = glm::vec3(25, 0, 0);  // Left to mmiddle connection
+    for (size_t i = 0; i < 5; i++)
+    {
+        Model* copyfloorType4 = new Model(*floorType4);
+        copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, -12.5f) + offset);
+        copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyfloorType4, defaultShader);
+    }
+
+
+    offset = glm::vec3(56.25f, 0, -25); // center
+    for (size_t i = 0; i < 5; i++)
+    {
+        for (size_t j = 0; j < 3; j++)
+        {
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, j * 6.25f) + offset);
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+        }
+    }
+
+    offset = glm::vec3(87.5f, 0, 0);  // center to right connection
+
+    for (size_t i = 0; i < 5; i++)
+    {
+        Model* copyfloorType4 = new Model(*floorType4);
+        copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, -12.5f) + offset);
+        copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyfloorType4, defaultShader);
+    }
+
+
+    offset = glm::vec3(118.75f, 0, 0);  // bottom right to top connection
+    for (size_t i = 0; i < 4; i++)
+    {
+        Model* copyfloorType4 = new Model(*floorType4);
+        copyfloorType4->transform.SetPosition(glm::vec3(0, 0.2f, -6.25f * i) + offset);
+        copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyfloorType4, defaultShader);
+    }
+
+    offset = glm::vec3(68.75f, 0, -25);   // Center to top center connection
+    Model* copyfloorType4 = new Model(*floorType4);
+    copyfloorType4->transform.SetPosition(glm::vec3(0, 0.2f, -6.25f * 1) + offset);
+    copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+    render.AddModelsAndShader(copyfloorType4, defaultShader);
+
+    offset = glm::vec3(62.5f, 0, -37.5f);  // Top center
+    for (size_t i = 0; i < 3; i++)
+    {
+        for (size_t j = 0; j < 3; j++)
+        {
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, j * -6.25f) + offset);
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+        }
+    }
+
+    offset = glm::vec3(62.5f, 0, -37.5f);  // Top center
+    for (size_t i = 0; i < 3; i++)
+    {
+        for (size_t j = 0; j < 3; j++)
+        {
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, j * -6.25f) + offset);
+            copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+        }
+    }
+
+
+
+    offset = glm::vec3(43.75f, 0, 0);  // Top left to top center connection
+    for (size_t i = 0; i < 3; i++)
+    {
+        Model* copyfloorType4 = new Model(*floorType4);
+        copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, -43.75f) + offset);
+        copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyfloorType4, defaultShader);
+    }
+
+    offset = glm::vec3(81.25f, 0, 0);  // Top left to top center connection
+    for (size_t i = 0; i < 3; i++)
+    {
+        Model* copyfloorType4 = new Model(*floorType4);
+        copyfloorType4->transform.SetPosition(glm::vec3(6.25f * i, 0.2f, -43.75f) + offset);
+        copyfloorType4->transform.SetScale(glm::vec3(0.0125f));
+        render.AddModelsAndShader(copyfloorType4, defaultShader);
+    }
 
 #pragma endregion
 
