@@ -19,7 +19,7 @@
     <Filter Include="BVH aabb">
       <UniqueIdentifier>{4560d9e5-d148-4397-a8cb-28d7e9b00738}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SpaceShip">
+    <Filter Include="Models class">
       <UniqueIdentifier>{2fc45378-e64d-4b0e-9815-745775789b9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

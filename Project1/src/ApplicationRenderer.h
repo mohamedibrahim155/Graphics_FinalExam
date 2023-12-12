@@ -16,6 +16,10 @@
 #include "GraphicsRender.h"
 #include "CameraMovement.h"
 #include "InputManager.h"
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 struct ModelData
 {
 
@@ -52,6 +56,9 @@ public:
 	void Clear();
 
 	void ProcessInput(GLFWwindow* window);
+
+	void CheckingValues(Model* testModel, float x, float y, float z);
+
 	
 	int recusiveCount = 0;
 
@@ -72,6 +79,7 @@ private:
 
 	Skybox* skybox;
 
+	ImGuiIO io;
 
 	Model* defaultBox;
 
@@ -92,5 +100,7 @@ private:
 
 	 bool firstMouse;
 	 bool cameraMoveToTarget;
+
+	 bool isTestingModel;
 };
 

@@ -31,6 +31,8 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
         glfwTerminate();
         return;
     }
+
+
     glfwMakeContextCurrent(window);
     glfwSetWindowUserPointer(window, this);
     glfwSetFramebufferSizeCallback(window, [](GLFWwindow* w, int x, int y)
@@ -54,6 +56,13 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
             static_cast<ApplicationRenderer*>(glfwGetWindowUserPointer(window))->MouseScroll(window, xoffset, yoffset);
         });
    
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+     io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
     
     //Init GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -179,12 +188,45 @@ void ApplicationRenderer::Start()
 #pragma region MODEL_LOADING
 
     Model* terrain = new Model("Models/Exam_Models/Terrain.ply");
+    terrain->transform.SetPosition(glm::vec3(0, 0, 80));
     render.AddModelsAndShader(terrain, defaultShader);
 
     Model* Moon = new Model("Models/Exam_Models/3D_models/3D_models/CGI_Moon_Kit/UV_Sphere_Cylindrical_UIV_Projection_.ply");
     Moon->transform.SetPosition(glm::vec3(30, 200, -200));
     Moon->transform.SetScale(glm::vec3(20));
     render.AddModelsAndShader(Moon, defaultShader);
+
+
+
+
+#pragma region Floors
+    std::string dungeonTexturePath = "Models/Exam_Models/3D_models/3D_models/z_Dungeon_Textures/Dungeons_2_Texture_01_A.png";
+
+    Model* floorType4 = new Model("Models/Exam_Models/3D_models/3D_models/Floors/SM_Env_Dwarf_Floor_04.ply");
+    floorType4->meshes[0]->meshMaterial->diffuseTexture = new Texture(dungeonTexturePath);
+    floorType4->transform.SetPosition(glm::vec3(0,0.1f,0));
+    floorType4->transform.SetScale(glm::vec3(0.025f));
+    render.AddModelsAndShader(floorType4, defaultShader);
+
+
+
+    float scaleOffset = 0.025f;
+
+    for (size_t i = 0; i < 6; i++)
+    {
+        for (size_t j = 0; j < 7; j++)
+        {
+            Model* copyfloorType4 = new Model(*floorType4);
+            copyfloorType4->transform.SetPosition(glm::vec3(i+ 13.5f, 0.1f, j ));
+            copyfloorType4->transform.SetScale(glm::vec3(0.025f));
+            render.AddModelsAndShader(copyfloorType4, defaultShader);
+           
+        }
+    }
+
+
+#pragma endregion
+
 
 #pragma endregion
 
@@ -285,12 +327,25 @@ void ApplicationRenderer::Render()
 
         ProcessInput(window);
 
+
+        ImGui::Begin("Media Player Lite!");
+                    // ImGui::SetWindowFontScale(2.0f);
+                    ImGui::SetWindowSize(ImVec2(800, 800));
+        
+                    //add a intro text
+                    ImGui::Text("KAIZOKU ENGINE");
+        
+        
+                     //framerate
+                    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+                    ImGui::End();
+
         PreRender(); //Update call BEFORE  DRAW
 
 
 
         /* ScrollShader->Bind();
-         ScrollShader->setMat4("ProjectionMatrix", _projection);*/
+        // ScrollShader->setMat4("ProjectionMatrix", _projection);*/
         
 
          render.Draw();
@@ -298,21 +353,33 @@ void ApplicationRenderer::Render()
 
          PostRender(); // Update Call AFTER  DRAW
 
+
+         ImGui::Render();
+         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
     glfwTerminate();
 }
 
 void ApplicationRenderer::PostRender()
 {
-   
+    
 }
 
 void ApplicationRenderer::Clear()
 {
     GLCALL(glClearColor(0.1f, 0.1f, 0.1f, 0.1f));
     GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
+
+
+    ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
 }
 
 void ApplicationRenderer::ProcessInput(GLFWwindow* window)
@@ -320,7 +387,7 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    float cameraSpeed=25;
+    float cameraSpeed=70;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
         camera.ProcessKeyboard(FORWARD, deltaTime * cameraSpeed);
@@ -344,6 +411,15 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
  
 
 
+}
+
+void ApplicationRenderer::CheckingValues(Model* testModel, float x, float y, float z)
+{
+    if (isTestingModel)
+    {
+        testModel->transform.position = glm::vec3(x, y, z);
+
+    }
 }
 
 
