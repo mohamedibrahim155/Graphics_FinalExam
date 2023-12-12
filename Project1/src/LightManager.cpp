@@ -287,6 +287,7 @@ void LightManager::UpdateUniformValues(GLuint shaderID)
 
 void LightManager::UpdateUniformValuesToShader(Shader* shader)
 {
+    shader->Bind();
     for (size_t i = 0; i < lightList.size(); i++)
     {
         if (lightList.size() > LightManager::MAX_LIGHT)
@@ -296,9 +297,9 @@ void LightManager::UpdateUniformValuesToShader(Shader* shader)
         }
         std::string index = std::to_string(i);
         shader->setVec3(  "lights[" + index + "].position", lightList[i].lightModel->transform.position);
-        shader->setVec3(  "lights[" + index + "].diffuse", lightList[i].diffuse);
-        shader->setVec3(  "lights[" + index + "].specular", lightList[i].specular);
-        shader->setVec3(  "lights[" + index + "].ambient", lightList[i].ambient);
+        shader->setVec4(  "lights[" + index + "].diffuse", lightList[i].diffuse);
+        shader->setVec4(  "lights[" + index + "].specular", lightList[i].specular);
+        shader->setVec4(  "lights[" + index + "].ambient", lightList[i].ambient);
         shader->setVec3(  "lights[" + index + "].direction", lightList[i].lightModel->transform.GetForward());
         shader->setInt(   "lights[" + index + "].lightType", lightList[i].lightType);
         shader->setFloat( "lights[" + index + "].linear", lightList[i].linear);
@@ -306,8 +307,15 @@ void LightManager::UpdateUniformValuesToShader(Shader* shader)
         shader->setFloat( "lights[" + index + "].constant", lightList[i].constant);
         shader->setFloat( "lights[" + index + "].cutOff", lightList[i].cutOffAngle);
         shader->setFloat( "lights[" + index + "].outerCutOff", lightList[i].outerCutOffAngle);
-        shader->setVec3(  "lights[" + index + "].color", lightList[i].color);
+        shader->setVec4(  "lights[" + index + "].color", lightList[i].color * lightList[i].intensity);
 
     }
     
 }
+
+int LightManager::LightLightIndex()
+{
+    return lightList.size()-1;
+}
+
+

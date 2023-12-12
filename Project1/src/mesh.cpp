@@ -175,7 +175,7 @@ void Mesh::MeshDraw(Shader* shader)
     }
     else if (shader->shaderType == ShaderType::SOLID)
     {
-        shader->setVec3("objectColor", glm::vec3(1, 1, 1));
+        shader->setVec3("objectColor", glm::vec3(0.8f, 0.5f, 0.2f));
     }
     VAO->Bind();
     IBO->Bind();

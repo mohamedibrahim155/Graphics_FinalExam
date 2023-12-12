@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
+    <ClCompile Include="src\FireBehaviour.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\CameraMovement.cpp" />
     <ClCompile Include="Extern\imGui\imgui.cpp" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stb_image.h" />
+    <ClInclude Include="src\FireBehaviour.h" />
     <ClInclude Include="src\iInputListener.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\CameraMovement.h" />

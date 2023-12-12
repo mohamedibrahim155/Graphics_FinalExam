@@ -20,6 +20,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include "FireBehaviour.h"
+
 struct ModelData
 {
 
@@ -87,6 +89,7 @@ private:
 
 	LoadModelsExternal m_loadModels;
 
+	std::vector<FireScale*> ListfireBehaviour;
 
 	 int windowWidth;
 	 int  WindowHeight;

@@ -15,6 +15,9 @@ public:
     static const unsigned int MAX_LIGHT = 15;
     Light LightToIlluminate[MAX_LIGHT];
     std::vector<Light> lightList;
+
+    int LightLightIndex();
+
     
 private:
 };

@@ -10,7 +10,7 @@ struct Material
 	vec4 ambientColor;
 	float specularValue;
     float shininess;
-    float alpha;
+    //float alpha;
    
 }; 
 

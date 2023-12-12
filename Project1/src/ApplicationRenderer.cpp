@@ -1063,6 +1063,19 @@ void ApplicationRenderer::Start()
 
 #pragma region Torches
 
+    Model* plane = new Model("Models/Plane/Plane.obj");
+    std::string texurepath = "Models/Plane/Fire.png";
+    Texture* FireTexture = new Texture(texurepath);
+
+    FireTexture->type = "diffuse_Texture";
+
+    plane->meshes[0]->meshMaterial->diffuseTexture = FireTexture;
+    plane->transform.SetPosition(glm::vec3(0, 1, 0));
+    plane->transform.SetRotation(glm::vec3(90, 0, 0));
+
+    render.AddModelsAndShader(plane, defaultShader);
+
+
     Model* Torch = new Model("Models/Exam_Models/3D_models/3D_models/Torches/SM_Prop_Dwarf_Torch_06.ply");
     Torch->meshes[0]->meshMaterial->diffuseTexture = new Texture(dungeonTexturePath);
     ////Light 1
@@ -1085,6 +1098,14 @@ void ApplicationRenderer::Start()
     TorchLight1.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight1);
+    int lastLightIndex= lightManager.LightLightIndex();
+
+    FireScale* fire1 = new FireScale(render, defaultShader, FireTexture);
+
+    fire1->LoadModel(plane, torch1PointLight->transform.position);
+
+    ListfireBehaviour.push_back(fire1);
+
 
     ////Light 2
     Model* Torch2 = new Model(*Torch);
@@ -1109,6 +1130,12 @@ void ApplicationRenderer::Start()
 
     lightManager.AddNewLight(TorchLight2);
 
+    FireScale* fire2 = new FireScale(render, defaultShader, FireTexture);
+
+    fire2->LoadModel(plane, torch2DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire2);
+
     ////Light 3
 
     Model* Torch3 = new Model(*Torch);
@@ -1130,6 +1157,14 @@ void ApplicationRenderer::Start()
     TorchLight3.quadratic = 0.01f;
     TorchLight3.SetColor(1, 0.6f, 0.2, 1);
     lightManager.AddNewLight(TorchLight3);
+
+
+    FireScale* fire3 = new FireScale(render, defaultShader, FireTexture);
+
+    fire3->LoadModel(plane, torch3DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire3);
+
 
     ////Light 4
     Model* Torch4 = new Model(*Torch);
@@ -1153,6 +1188,12 @@ void ApplicationRenderer::Start()
     TorchLight4.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight4);
+
+    FireScale* fire4 = new FireScale(render, defaultShader, FireTexture);
+
+    fire4->LoadModel(plane, torch4DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire4);
 
 
     ////Light 5
@@ -1179,7 +1220,11 @@ void ApplicationRenderer::Start()
     lightManager.AddNewLight(TorchLight5);
 
 
+    FireScale* fire5 = new FireScale(render, defaultShader, FireTexture);
 
+    fire5->LoadModel(plane, torch5DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire5);
 
 
 
@@ -1196,7 +1241,7 @@ void ApplicationRenderer::Start()
     render.AddModelsAndShader(torch6DebugModel, lightShader);
 
     Light TorchLight6;
-    TorchLight6.Initialize(torch5DebugModel, POINT_LIGHT, 0.75f);
+    TorchLight6.Initialize(torch6DebugModel, POINT_LIGHT, 0.75f);
     
     TorchLight6.SetColor(glm::vec4(1, 0.5f, 0, 1));
 
@@ -1208,7 +1253,11 @@ void ApplicationRenderer::Start()
 
     lightManager.AddNewLight(TorchLight6);
 
+    FireScale* fire6 = new FireScale(render, defaultShader, FireTexture);
 
+    fire6->LoadModel(plane, torch6DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire6);
 
 
     Model* Torch7 = new Model(*Torch);
@@ -1232,6 +1281,12 @@ void ApplicationRenderer::Start()
     TorchLight7.SetColor(1, 0.6f, 0.2, 1);
 
     lightManager.AddNewLight(TorchLight7);
+
+    FireScale* fire7 = new FireScale(render, defaultShader, FireTexture);
+
+    fire7->LoadModel(plane, torch7DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire7);
 
 
     Model* Torch8 = new Model(*Torch);
@@ -1258,6 +1313,11 @@ void ApplicationRenderer::Start()
 
     lightManager.AddNewLight(TorchLight8);
 
+    FireScale* fire8 = new FireScale(render, defaultShader, FireTexture);
+
+    fire8->LoadModel(plane, torch8DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire8);
 
 
     Model* Torch9 = new Model(*Torch);
@@ -1284,6 +1344,13 @@ void ApplicationRenderer::Start()
 
     lightManager.AddNewLight(TorchLight9);
 
+
+    FireScale* fire9 = new FireScale(render, defaultShader, FireTexture);
+
+    fire9->LoadModel(plane, torch8DebugModel->transform.position);
+
+    ListfireBehaviour.push_back(fire9);
+
 #pragma endregion
 
 
@@ -1291,19 +1358,7 @@ void ApplicationRenderer::Start()
 
 
 
-    Model* plane = new Model("Models/Plane/Plane.obj");
-    std::string texurepath = "Models/Plane/FireTexture.png";
-    Texture* alpha = new Texture(texurepath);
-
-    alpha->type = "diffuse_Texture";
-
-    plane->meshes[0]->meshMaterial->diffuseTexture = alpha;
-
-    alpha->type = "opacity_Texture";
-    plane->meshes[0]->meshMaterial->alphaTexture = alpha;
-    plane->transform.SetPosition(glm::vec3(0, 1, 0));
-
-    render.AddModelsAndShader(plane, defaultShader);
+   
 #pragma region Lights
 
     Model* directionLightModel = new Model(*Sphere);
@@ -1356,8 +1411,8 @@ void ApplicationRenderer::PreRender()
 
 
     defaultShader->Bind();
-    lightManager.UpdateUniformValues(defaultShader->ID);
-
+  //  lightManager.UpdateUniformValues(defaultShader->ID);
+    lightManager.UpdateUniformValuesToShader(defaultShader);
 
     defaultShader->setMat4("projection", _projection);
     defaultShader->setMat4("view", _view);
@@ -1450,6 +1505,14 @@ void ApplicationRenderer::Render()
 
 void ApplicationRenderer::PostRender()
 {
+    for (size_t i = 0; i < ListfireBehaviour.size(); i++)
+    {
+        ListfireBehaviour[i]->Update(deltaTime);
+
+        float calulateFlicker = std::abs(ListfireBehaviour[i]->CalculateFlickering(deltaTime) * 10.0f);
+        lightManager.lightList[i].intensity = calulateFlicker ;
+    }
+
     
 }
 
