@@ -176,24 +176,17 @@ void ApplicationRenderer::Start()
     Model* Sphere = new Model((char*)"Models/DefaultSphere/Sphere_1_unit_Radius.ply", true);
 
 
+#pragma region MODEL_LOADING
 
+    Model* terrain = new Model("Models/Exam_Models/Terrain.ply");
+    render.AddModelsAndShader(terrain, defaultShader);
 
-    
+    Model* Moon = new Model("Models/Exam_Models/3D_models/3D_models/CGI_Moon_Kit/UV_Sphere_Cylindrical_UIV_Projection_.ply");
+    Moon->transform.SetPosition(glm::vec3(30, 200, -200));
+    Moon->transform.SetScale(glm::vec3(20));
+    render.AddModelsAndShader(Moon, defaultShader);
 
-
-     Model* directionLightModel = new Model(*Sphere);
-     directionLightModel->transform.SetPosition(glm::vec3(1.0f, 3.0f, 0.0f));
-     directionLightModel->transform.SetRotation(glm::vec3(-60, 0, 0));
-     directionLightModel->transform.SetScale(glm::vec3(0.1f));
-
-
-
-
-
-
-
-
-
+#pragma endregion
 
 
 
@@ -203,18 +196,19 @@ void ApplicationRenderer::Start()
 
 #pragma region Lights
 
-Light directionLight;
-directionLight.lightType = LightType::DIRECTION_LIGHT;
-directionLight.lightModel = directionLightModel;
-directionLight.ambient =  glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-directionLight.diffuse =  glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-directionLight.specular = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
-directionLight.intensity = 0.5f;
+    Model* directionLightModel = new Model(*Sphere);
+    directionLightModel->transform.SetPosition(glm::vec3(Moon->transform.position));
+    directionLightModel->transform.SetRotation(glm::vec3(0, 0, 0));
+    directionLightModel->transform.SetScale(glm::vec3(0.1f));
 
-
-
-
-
+    Light directionLight;
+    directionLight.lightType = LightType::POINT_LIGHT;
+    directionLight.lightModel = directionLightModel;
+    directionLight.ambient =  glm::vec4(50, 50, 50, 1.0f);
+    directionLight.diffuse =  glm::vec4(30, 30, 30, 1.0f);
+    directionLight.specular = glm::vec4(30, 30, 30, 1.0f);
+    directionLight.quadratic = 0.001f;
+    directionLight.intensity = 0.75f;
 
 #pragma endregion
 
@@ -222,27 +216,53 @@ directionLight.intensity = 0.5f;
      render.selectedModel = nullptr;
 
      render.AddModelsAndShader(directionLightModel, lightShader);
-
-
-     
-
      //LightRenderer
-     lightManager.AddNewLight(directionLight);
 
+
+     lightManager.AddNewLight(directionLight);
      lightManager.SetUniforms(defaultShader->ID);
    
 
      defaultShader->Bind();
-     defaultShader->setInt("skybox", 0);
+     //defaultShader->setInt("skybox", 0);
 
-     moveCam.AssignCam(&camera);
 
     
 }
 
 void ApplicationRenderer::PreRender()
 {
+    glm::mat4 _projection = glm::perspective(glm::radians(camera.Zoom), (float)windowWidth / (float)WindowHeight, 0.1f, 1000.0f);
+    glm::mat4 _view = camera.GetViewMatrix();
+    glm::mat4 _skyboxview = glm::mat4(glm::mat3(camera.GetViewMatrix()));
 
+    glDepthFunc(GL_LEQUAL);
+    SkyboxShader->Bind();
+    SkyboxShader->setMat4("view", _skyboxview);
+    SkyboxShader->setMat4("projection", _projection);
+
+     skybox->Skyboxrender();
+    glDepthFunc(GL_LESS);
+
+
+    defaultShader->Bind();
+    lightManager.UpdateUniformValues(defaultShader->ID);
+
+
+    defaultShader->setMat4("projection", _projection);
+    defaultShader->setMat4("view", _view);
+    defaultShader->setVec3("viewPos", camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
+    defaultShader->setFloat("time", scrollTime);
+    defaultShader->setBool("isDepthBuffer", false);
+
+    lightShader->Bind();
+    lightShader->setVec3("objectColor", glm::vec3(1, 1, 1));
+    lightShader->setMat4("projection", _projection);
+    lightShader->setMat4("view", _view);
+
+    StencilShader->Bind();
+    StencilShader->setMat4("projection", _projection);
+    StencilShader->setMat4("view", _view);
 }
 
 void ApplicationRenderer::Render()
@@ -265,64 +285,16 @@ void ApplicationRenderer::Render()
 
         ProcessInput(window);
 
-        glm::mat4 _projection = glm::perspective(glm::radians(camera.Zoom), (float)windowWidth / (float)WindowHeight, 0.1f, 100.0f);
-        glm::mat4 _view = camera.GetViewMatrix();
-        glm::mat4 _skyboxview = glm::mat4(glm::mat3(camera.GetViewMatrix()));
-
-
         PreRender(); //Update call BEFORE  DRAW
 
-        glDepthFunc(GL_LEQUAL);
-        SkyboxShader->Bind();
-        SkyboxShader->setMat4("view", _skyboxview);
-        SkyboxShader->setMat4("projection", _projection);
 
-       // skybox->Skyboxrender();
-        glDepthFunc(GL_LESS); 
-
-
-        defaultShader->Bind();
-        lightManager.UpdateUniformValues(defaultShader->ID);
-       
-
-         defaultShader->setMat4("projection", _projection);
-         defaultShader->setMat4("view", _view);
-         defaultShader->setVec3("viewPos", camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
-         defaultShader->setFloat("time", scrollTime);
-         defaultShader->setBool("isDepthBuffer", false);
-
-         lightShader->Bind();
-         lightShader->setVec3("objectColor", glm::vec3(1, 1, 1));
-         lightShader->setMat4("projection", _projection);
-         lightShader->setMat4("view", _view);
-
-         StencilShader->Bind();
-         StencilShader->setMat4("projection", _projection);
-         StencilShader->setMat4("view", _view);
 
         /* ScrollShader->Bind();
          ScrollShader->setMat4("ProjectionMatrix", _projection);*/
         
 
-       
-
-         
-  
-         
-         // make models that it should not write in the stencil buffer
          render.Draw();
        
-
-         if (cameraMoveToTarget)
-         {
-             camera.UpdateCameraPosition(deltaTime);
-
-         }
-       
-    
-        
-      
-     
 
          PostRender(); // Update Call AFTER  DRAW
 
@@ -348,10 +320,10 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    float cameraSpeed=2;
+    float cameraSpeed=25;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
-       // camera.ProcessKeyboard(FORWARD, deltaTime * cameraSpeed);
+        camera.ProcessKeyboard(FORWARD, deltaTime * cameraSpeed);
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
