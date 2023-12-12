@@ -1,0 +1,220 @@
+
+/////////////// Walls 
+
+ModelPath: Models/WallsHouse/Walls.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// TableSofa 
+
+ModelPath: Models/TableSofa/TableSofa.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Sofas 
+
+ModelPath: Models/Sofas/Sofas.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Floor 
+
+ModelPath: Models/Floor/Floor.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Deco 
+
+ModelPath: Models/Deco/Deco.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Door 
+
+ModelPath: Models/Door/Door.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Deco2 
+
+ModelPath: Models/Deco2/Deco2.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Desk 
+
+ModelPath: Models/Desk/Desk.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: Models/Desk/04_-_Default_baseColor.jpeg
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Desk2 
+
+ModelPath: Models/Desk2/Desk2.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// TeaTable 
+
+ModelPath: Models/TeaTable/TeaTable.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// FloorMat 
+
+ModelPath: Models/FloorMat/FloorMat.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Fireplace 
+
+ModelPath: Models/Fireplace/Fireplace.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Photos 
+
+ModelPath: Models/Photos/Photos.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Music 
+
+ModelPath: Models/Music/Music.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// CD
+
+ModelPath: Models/CD/CD.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Roof
+
+ModelPath: Models/Roof/Roof.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: Models/AlphaTexture/Pattern.jpeg
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Symbols
+
+ModelPath: Models/Symbols/Symbols.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// WallLights
+
+ModelPath: Models/WallLights/WallLights.obj
+ModelPosition: 0 0 0
+ModelRotation: 0 0 0 
+TexturePath: Models/AlphaTexture/Pattern.jpeg
+Transperency: 0
+Cutoff: 0
+ModelScale: 1 1 1
+
+/////////////// Grass
+
+ModelPath: Models/Grass/Grass.obj
+ModelPosition: 0 10 0
+ModelRotation: 0 0 0 
+TexturePath: None
+Transperency: 0
+Cutoff: 1
+ModelScale: 1 1 1
+
+/////////////// Window
+
+ModelPath: Models/Window/Window.obj
+ModelPosition: -1.75 1.6 -4.83
+ModelRotation: 90 0 0 
+TexturePath: Models/Window/WindowAlphaMask.png
+Transperency: 1
+Cutoff: 0
+ModelScale: 0.75 1 1.5
+
+/////////////// Window
+
+ModelPath: Models/Window/Window.obj
+ModelPosition: 1.95 1.6 -4.83
+ModelRotation: 90 0 0 
+TexturePath: Models/Window/WindowAlphaMask.png
+Transperency: 1
+Cutoff: 0
+ModelScale: 0.75 1 1.5
+
+/////////////// Scroll
+
+ModelPath: Models/Scroll/scroll.obj
+ModelPosition: 0 0.4 -4.6
+ModelRotation: 90 0 90 
+TexturePath: None
+Transperency: 0
+Cutoff: 1
+ModelScale: 0.5 0.7 0.5
