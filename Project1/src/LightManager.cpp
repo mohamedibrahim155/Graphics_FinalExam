@@ -234,6 +234,7 @@ void LightManager::AddNewLight(Light& light)
 
 void LightManager::UpdateUniformValues(GLuint shaderID)
 {
+    SetUniforms(shaderID);
     for (unsigned int index = 0;index <lightList.size(); index++)
     {
         if (lightList.size()>LightManager::MAX_LIGHT)
@@ -242,6 +243,7 @@ void LightManager::UpdateUniformValues(GLuint shaderID)
             break;
         }
         //lightList[index].lightModel->transform.position
+       
         GLCALL(glUniform3f(lightList[index].position_UL, lightList[index].lightModel->transform.position.x ,lightList[index].lightModel->transform.position.y, lightList[index].lightModel->transform.position.z));
        
         glm::vec3 value = lightList[index].lightModel->transform.GetForward();

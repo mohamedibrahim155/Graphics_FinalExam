@@ -199,7 +199,7 @@ void ApplicationRenderer::Start()
 
 
 
-#pragma region Floors
+    #pragma region Floors
     std::string dungeonTexturePath = "Models/Exam_Models/3D_models/3D_models/z_Dungeon_Textures/Dungeons_2_Texture_01_A.png";
 
     Model* floorType4 = new Model("Models/Exam_Models/3D_models/3D_models/Floors/SM_Env_Dwarf_Floor_08.ply");
@@ -380,7 +380,7 @@ void ApplicationRenderer::Start()
 
 #pragma endregion
 
-#pragma region Walls
+    #pragma region Walls
 
     Model* WallType3 = new Model("Models/Exam_Models/3D_models/3D_models/Walls/SM_Env_Dwarf_Wall_03.ply");
     WallType3->meshes[0]->meshMaterial->diffuseTexture = new Texture(dungeonTexturePath);
@@ -1052,6 +1052,7 @@ void ApplicationRenderer::Start()
     singlecopyWallType3->transform.SetScale(glm::vec3(0.0125f));
     render.AddModelsAndShader(singlecopyWallType3, defaultShader);
 
+    // SINGLE path left middle center to midle top connection (LEFT)
     singlecopyWallType3 = new Model(*WallType3);
     singlecopyWallType3->transform.SetPosition(glm::vec3(62.5f, 0.2f, -31.25f));
     singlecopyWallType3->transform.SetRotation(glm::vec3(0, -90, 0));
@@ -1060,6 +1061,173 @@ void ApplicationRenderer::Start()
 
 #pragma endregion
 
+#pragma region Torches
+
+    Model* Torch = new Model("Models/Exam_Models/3D_models/3D_models/Torches/SM_Prop_Dwarf_Torch_06.ply");
+    Torch->meshes[0]->meshMaterial->diffuseTexture = new Texture(dungeonTexturePath);
+    ////Light 1
+    Torch->transform.SetPosition(glm::vec3(0, 0.4f, 30));
+    Torch->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch, defaultShader);
+
+    Model* torch1PointLight = new Model(*Sphere);
+    glm::vec3 yOffset(0, 2, 0);
+    torch1PointLight->transform.SetPosition(Torch->transform.position+ yOffset);
+    torch1PointLight->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch1PointLight, lightShader);
+
+    Light TorchLight1;
+    TorchLight1.Initialize(torch1PointLight,POINT_LIGHT, 0.5f);
+    lightManager.AddNewLight(TorchLight1);
+
+    ////Light 2
+    Model* Torch2 = new Model(*Torch);
+    Torch2->transform.SetPosition(glm::vec3(30, 0.4f, 2));
+    Torch2->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch2, defaultShader);
+
+    Model* torch2DebugModel = new Model(*Sphere);
+    torch2DebugModel->transform.SetPosition(Torch2->transform.position + yOffset);
+    torch2DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch2DebugModel, lightShader);
+
+    Light TorchLight2;
+    TorchLight2.Initialize(torch2DebugModel, POINT_LIGHT, 0.5f);
+    TorchLight2.SetColor(glm::vec4(1,0.5f,0,1));
+
+    lightManager.AddNewLight(TorchLight2);
+
+    ////Light 3
+
+    Model* Torch3 = new Model(*Torch);
+    Torch3->transform.SetPosition(glm::vec3(30, 0.4f, -60.0f));
+    Torch3->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch3, defaultShader);
+
+    Model* torch3DebugModel = new Model(*Sphere);
+    torch3DebugModel->transform.SetPosition(Torch3->transform.position + yOffset);
+    torch3DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch3DebugModel, lightShader);
+
+    Light TorchLight3;
+    TorchLight3.Initialize(torch3DebugModel, POINT_LIGHT, 0.5f);
+    TorchLight3.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight3);
+
+    ////Light 4
+    Model* Torch4 = new Model(*Torch);
+    Torch4->transform.SetPosition(glm::vec3(0, 0.4f, -27));
+    Torch4->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch4, defaultShader);
+
+    Model* torch4DebugModel = new Model(*Sphere);
+    torch4DebugModel->transform.SetPosition(Torch4->transform.position + yOffset);
+    torch4DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch4DebugModel, lightShader);
+
+    Light TorchLight4;
+    TorchLight4.Initialize(torch4DebugModel, POINT_LIGHT, 0.5f);
+    TorchLight4.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight4);
+
+
+    ////Light 5
+    Model* Torch5 = new Model(*Torch);
+    Torch5->transform.SetPosition(glm::vec3(60.100f, 0.4f, -52));
+    Torch5->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch5, defaultShader);
+
+    Model* torch5DebugModel = new Model(*Sphere);
+    torch5DebugModel->transform.SetPosition(Torch5->transform.position + yOffset);
+    torch5DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch5DebugModel, lightShader);
+
+    Light TorchLight5;
+    TorchLight5.Initialize(torch5DebugModel, POINT_LIGHT, 0.75f);
+    TorchLight5.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight5);
+
+
+
+
+
+
+    ////Light 6
+
+    Model* Torch6 = new Model(*Torch);
+    Torch6->transform.SetPosition(glm::vec3(72.700f, 0.4f, -41.200f));
+    Torch6->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch6, defaultShader);
+
+    Model* torch6DebugModel = new Model(*Sphere);
+    torch6DebugModel->transform.SetPosition(Torch6->transform.position + yOffset);
+    torch6DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch6DebugModel, lightShader);
+
+    Light TorchLight6;
+    TorchLight6.Initialize(torch5DebugModel, POINT_LIGHT, 0.75f);
+    TorchLight6.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight6);
+
+
+
+
+    Model* Torch7 = new Model(*Torch);
+    Torch7->transform.SetPosition(glm::vec3(115.0f, 0.4f,-46.20f));
+    Torch7->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch7, defaultShader);
+
+    Model* torch7DebugModel = new Model(*Sphere);
+    torch7DebugModel->transform.SetPosition(Torch7->transform.position + yOffset);
+    torch7DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch7DebugModel, lightShader);
+
+    Light TorchLight7;
+    TorchLight7.Initialize(torch7DebugModel, POINT_LIGHT, 0.75f);
+    TorchLight7.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight7);
+
+
+    Model* Torch8 = new Model(*Torch);
+    Torch8->transform.SetPosition(glm::vec3(130.0f, 0.4f, 13.8f));
+    Torch8->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch8, defaultShader);
+
+    Model* torch8DebugModel = new Model(*Sphere);
+    torch8DebugModel->transform.SetPosition(Torch8->transform.position + yOffset);
+    torch8DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch8DebugModel, lightShader);
+
+    Light TorchLight8;
+    TorchLight8.Initialize(torch8DebugModel, POINT_LIGHT, 0.75f);
+    TorchLight8.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight8);
+
+
+
+    Model* Torch9 = new Model(*Torch);
+    Torch9->transform.SetPosition(glm::vec3(100.0f, 0.4f, 13.80f));
+    Torch9->transform.SetScale(glm::vec3(0.05f));
+    render.AddModelsAndShader(Torch9, defaultShader);
+
+    Model* torch9DebugModel = new Model(*Sphere);
+    torch9DebugModel->transform.SetPosition(Torch9->transform.position + yOffset);
+    torch9DebugModel->transform.SetScale(glm::vec3(0.5f));
+    render.AddModelsAndShader(torch9DebugModel, lightShader);
+
+    Light TorchLight9;
+    TorchLight9.Initialize(torch9DebugModel, POINT_LIGHT, 0.75f);
+    TorchLight9.SetColor(glm::vec4(1, 0.5f, 0, 1));
+
+    lightManager.AddNewLight(TorchLight9);
+
+#pragma endregion
 
 
 #pragma endregion
@@ -1096,7 +1264,7 @@ void ApplicationRenderer::Start()
 
 
      lightManager.AddNewLight(directionLight);
-     lightManager.SetUniforms(defaultShader->ID);
+     
    
 
      defaultShader->Bind();
