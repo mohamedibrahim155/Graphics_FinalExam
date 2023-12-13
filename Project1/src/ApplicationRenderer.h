@@ -61,7 +61,7 @@ public:
 
 	void ProcessInput(GLFWwindow* window);
 
-	void CheckingValues(Model* testModel, float x, float y, float z);
+	void CheckingValues(Model* testModel, float x, float y, float z, bool isRot = false , bool isscale=false, bool isPosition=false);
 
 	
 	int recusiveCount = 0;
@@ -110,5 +110,13 @@ private:
 	 bool isTestingModel;
 
 	 float xPos, yPos, zPos;
+
+	 float xRot, yRot, zRot;
+	 float xScale, yScale, zScale;
+
+	 bool isRotation = false;
+	 bool isScale = false;
+	 bool isPositon = false;
+
 };
 

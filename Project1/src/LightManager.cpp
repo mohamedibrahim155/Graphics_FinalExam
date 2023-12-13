@@ -300,7 +300,11 @@ void LightManager::UpdateUniformValuesToShader(Shader* shader)
         shader->setVec4(  "lights[" + index + "].diffuse", lightList[i].diffuse);
         shader->setVec4(  "lights[" + index + "].specular", lightList[i].specular);
         shader->setVec4(  "lights[" + index + "].ambient", lightList[i].ambient);
-        shader->setVec3(  "lights[" + index + "].direction", lightList[i].lightModel->transform.GetForward());
+
+        glm::vec3 value = lightList[i].lightModel->transform.GetForward();
+        lightList[i].direction = value;
+
+        shader->setVec3(  "lights[" + index + "].direction", lightList[i].direction.x, lightList[i].direction.y, lightList[i].direction.z);
         shader->setInt(   "lights[" + index + "].lightType", lightList[i].lightType);
         shader->setFloat( "lights[" + index + "].linear", lightList[i].linear);
         shader->setFloat( "lights[" + index + "].quadratic", lightList[i].quadratic);

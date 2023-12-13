@@ -13,7 +13,8 @@ class Texture
 {
 public:
 	Texture() {}
-	Texture(std::string& filePath);
+	//Texture(std::string& filePath);
+	Texture(const std::string& filePath);
 	~Texture() {}
 	unsigned int id;
 	std::string path;

@@ -231,14 +231,14 @@ void ApplicationRenderer::Start()
       crystalsTexture->type = "opacity_Texture";
       crystal->meshes[0]->meshMaterial->alphaTexture = crystalsTexture;
 
-      crystal->transform.SetPosition(glm::vec3(0, 1, 0));
+      crystal->transform.SetPosition(glm::vec3(30, 1, -30));
       crystal->transform.SetScale(glm::vec3(0.0125f));
 
 
       render.AddTransparentModels(crystal, defaultShader);
 
       Model* crystal2 = new Model(*crystal);
-      crystal2->transform.SetPosition(glm::vec3(0, 1, 0));
+      crystal2->transform.SetPosition(glm::vec3(70, 1, -30));
       crystal2->transform.SetScale(glm::vec3(0.0125f));
 
       crystalsTexture->type = "diffuse_Texture";
@@ -1438,6 +1438,8 @@ void ApplicationRenderer::Start()
     Beholder* beholder = new Beholder(&render, defaultShader);
 
     beholder->LoadBeholderModel();
+
+
 #pragma endregion
 
 
@@ -1465,24 +1467,132 @@ void ApplicationRenderer::Start()
 
 
     Model* beholderSpotLight1Model = new Model(*Sphere);
-    beholderSpotLight1Model->transform.SetPosition(glm::vec3(Moon->transform.position));
+    beholderSpotLight1Model->transform.SetPosition(glm::vec3(0));
     beholderSpotLight1Model->transform.SetRotation(glm::vec3(0, 0, 0));
     beholderSpotLight1Model->transform.SetScale(glm::vec3(0.1f));
 
     render.AddModelsAndShader(beholderSpotLight1Model, lightShader);
 
     Light beholderSpotLight1;
-    beholderSpotLight1.Initialize(beholderSpotLight1Model, SPOT_LIGHT, 0.75f);
-    beholderSpotLight1.ambient = glm::vec4(2, 2, 2, 1.0f);
-    beholderSpotLight1.diffuse = glm::vec4(2, 2, 2, 1.0f);
-    beholderSpotLight1.specular = glm::vec4(2, 2, 2, 1.0f);
-    beholderSpotLight1.quadratic = 0.001f;
-    beholderSpotLight1.linear = 0.001f;
-    beholderSpotLight1.constant = 0.001f;
-    beholderSpotLight1.cutOffAngle = 12.5f;
-    beholderSpotLight1.outerCutOffAngle = 15;
-    
+    beholderSpotLight1.lightType = SPOT_LIGHT;
+    beholderSpotLight1.lightModel = beholderSpotLight1Model;
+    beholderSpotLight1.ambient = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight1.diffuse = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight1.specular = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight1.quadratic = 0.1f;
+    beholderSpotLight1.cutOffAngle = 3;
+    beholderSpotLight1.outerCutOffAngle = 3;
+    beholderSpotLight1.intensity = 20;
+    beholderSpotLight1.SetColor(0, 255, 0, 1);
     lightManager.AddNewLight(beholderSpotLight1);
+
+
+    Model* beholderSpotLight1Model2 = new Model(*Sphere);
+    beholderSpotLight1Model2->transform.SetPosition(glm::vec3(0));
+    beholderSpotLight1Model2->transform.SetRotation(glm::vec3(0, 0, 0));
+    beholderSpotLight1Model2->transform.SetScale(glm::vec3(0.1f));
+
+    render.AddModelsAndShader(beholderSpotLight1Model2, lightShader);
+
+    Light beholderSpotLight2;
+    beholderSpotLight2.lightType = SPOT_LIGHT;
+    beholderSpotLight2.lightModel = beholderSpotLight1Model2;
+    beholderSpotLight2.ambient = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight2.diffuse = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight2.specular = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight2.quadratic = 0.1f;
+    beholderSpotLight2.cutOffAngle = 3;
+    beholderSpotLight2.outerCutOffAngle = 3;
+    beholderSpotLight2.intensity = 20.0f;
+    beholderSpotLight2.SetColor(0, 0, 255, 1);
+    // beholderSpotLight1.SetColor(1, 0, 0, 1);
+    lightManager.AddNewLight(beholderSpotLight2);
+
+
+
+    Model* beholderSpotLight1Model3 = new Model(*Sphere);
+    beholderSpotLight1Model3->transform.SetPosition(glm::vec3(0));
+    beholderSpotLight1Model3->transform.SetRotation(glm::vec3(0, 0, 0));
+    beholderSpotLight1Model3->transform.SetScale(glm::vec3(0.1f));
+
+    render.AddModelsAndShader(beholderSpotLight1Model3, lightShader);
+
+    Light beholderSpotLight3;
+    beholderSpotLight3.lightType = SPOT_LIGHT;
+    beholderSpotLight3.lightModel = beholderSpotLight1Model3;
+    beholderSpotLight3.ambient = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight3.diffuse = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight3.specular = glm::vec4(10, 10, 10, 1.0f);
+    beholderSpotLight3.quadratic = 0.1f;
+    beholderSpotLight3.cutOffAngle = 3;
+    beholderSpotLight3.outerCutOffAngle = 3;
+    beholderSpotLight3.intensity = 20.0f;
+    beholderSpotLight3.SetColor(255, 0, 0, 1);
+    // beholderSpotLight1.SetColor(1, 0, 0, 1);
+    lightManager.AddNewLight(beholderSpotLight3);
+
+
+    Model* BeholderCone = new Model("Models/Exam_Models/3D_models/3D_models/beholder_vision_cone/vision_cone.ply");
+    
+
+    BeholderCone->transform.SetPosition(glm::vec3(8.7f, 5.5f, 15.0f));
+    BeholderCone->transform.SetRotation(glm::vec3(-21.5f, 0, 0));
+    BeholderCone->transform.SetScale(glm::vec3(1, 1, 1.75f));
+
+    Texture* bluetexture = new Texture("Models/Exam_Models/3D_models/3D_models/Texture/Solid_blue.png");
+
+
+  
+   
+    BeholderCone->meshes[0]->meshMaterial->diffuseTexture = crystalsTexture;
+    BeholderCone->meshes[0]->meshMaterial->alphaTexture = crystalsTexture;
+
+    beholderSpotLight1.lightModel->transform.SetPosition(BeholderCone->transform.position);
+    beholderSpotLight1.lightModel->transform.SetRotation(BeholderCone->transform.rotation);
+
+    render.AddTransparentModels(BeholderCone, defaultShader);
+
+    //beholderSpotLight1.lightModel->transform.SetScale(BeholderCone->transform.scale);
+
+
+    Model* BeholderCone2 = new Model(*BeholderCone);
+    BeholderCone2->transform.SetScale(glm::vec3(1.5f, 1.5f, 0.5f));
+
+    BeholderCone2->transform.SetPosition(glm::vec3(11.5f, 5.0f, 15.0f));
+    BeholderCone2->transform.SetRotation(glm::vec3(-50, 0, 60));
+    BeholderCone2->transform.SetScale(glm::vec3(1, 1, 1));
+
+    
+
+    beholderSpotLight2.lightModel->transform.SetPosition(BeholderCone2->transform.position);
+    beholderSpotLight2.lightModel->transform.SetRotation(BeholderCone2->transform.rotation);
+    render.AddTransparentModels(BeholderCone2, defaultShader);
+
+
+
+
+    Model* BeholderCone3 = new Model(*BeholderCone);
+    BeholderCone3->transform.SetScale(glm::vec3(1.5f, 1.5f, 0.5f));
+
+    BeholderCone3->transform.SetPosition(glm::vec3(11.5f, 3.5f, 15.0f));
+    BeholderCone3->transform.SetRotation(glm::vec3(-30.0, 0, 27));
+    BeholderCone3->transform.SetScale(glm::vec3(1, 1, 0.7f));
+
+    BeholderCone3->meshes[0]->meshMaterial->diffuseTexture = crystalsTexture;
+    BeholderCone3->meshes[0]->meshMaterial->alphaTexture = crystalsTexture;
+
+    beholderSpotLight3.lightModel->transform.SetPosition(BeholderCone3->transform.position);
+    beholderSpotLight3.lightModel->transform.SetRotation(BeholderCone3->transform.rotation);
+
+    render.AddTransparentModels(BeholderCone3, defaultShader);
+
+
+
+
+
+
+    /*testModel = BeholderCone;
+    isTestingModel = true*/;
    
 
 #pragma endregion
@@ -1523,8 +1633,8 @@ void ApplicationRenderer::PreRender()
 
 
     defaultShader->Bind();
-  //  lightManager.UpdateUniformValues(defaultShader->ID);
-    lightManager.UpdateUniformValuesToShader(defaultShader);
+    lightManager.UpdateUniformValues(defaultShader->ID);
+   // lightManager.UpdateUniformValuesToShader(defaultShader);
 
     defaultShader->setMat4("projection", _projection);
     defaultShader->setMat4("view", _view);
@@ -1553,13 +1663,18 @@ void ApplicationRenderer::ImGUIRender()
    
     ImGui::NewLine();
     ImGui::PushItemWidth(100);
-    ImGui::InputFloat("X Position", &xPos, 0.1f);
+    ImGui::InputFloat("X ", &xPos, 0.5f);
     ImGui::SameLine();
-    ImGui::InputFloat("Y Position", &yPos, 0.1f);
+    ImGui::InputFloat("Y ", &yPos, 0.5f);
     ImGui::SameLine();
-    ImGui::InputFloat("Z Position", &zPos, 0.1f);
+    ImGui::InputFloat("Z ", &zPos, 0.5f);
     ImGui::Text("POSITION");
-    CheckingValues(testModel, xPos, yPos, zPos);
+  
+    ImGui::Checkbox("Is Positon ", &isPositon);
+    ImGui::Checkbox("Is Rotaion axis", &isRotation);
+    ImGui::Checkbox("Is Scale ", &isScale);
+
+    CheckingValues(testModel, xPos, yPos, zPos, isRotation,isScale, isPositon);
 
     //framerate
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
@@ -1670,11 +1785,23 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
 
 }
 
-void ApplicationRenderer::CheckingValues(Model* testModel, float x, float y, float z)
+void ApplicationRenderer::CheckingValues(Model* testModel, float x, float y, float z, bool isRot, bool isscale ,  bool isPosition)
 {
     if (isTestingModel && testModel!=nullptr)
     {
-        testModel->transform.SetPosition(glm::vec3(x,y,z));
+        if (isPosition)
+        {
+            testModel->transform.SetPosition(glm::vec3(x, y, z));
+        }
+         if (isRot)
+        {
+            testModel->transform.SetRotation(glm::vec3(x, y, z));
+        }
+        if (isscale)
+        {
+            testModel->transform.SetScale(glm::vec3(x, y, z));
+        }
+       
 
     }
 }

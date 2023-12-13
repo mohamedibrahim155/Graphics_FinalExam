@@ -100,7 +100,7 @@ void main()
         {
             discard;
         }
-        FragColor = result*cutOff.a; 
+      //  FragColor = result*cutOff.a; 
      
      }
      
