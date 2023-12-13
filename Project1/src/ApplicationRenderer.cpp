@@ -181,9 +181,10 @@ void ApplicationRenderer::Start()
     render.SetDefaultCube(defaultBox);
 
     render.SetLightShader(lightShader);
-
+   // camera.transform.SetPosition(glm::vec3(0, 0, 5));
     Model* Sphere = new Model((char*)"Models/DefaultSphere/Sphere_1_unit_Radius.ply", true);
 
+    camera.transform.SetPosition(glm::vec3(0, 15, 10));
 
 #pragma region MODEL_LOADING
 
@@ -271,8 +272,8 @@ void ApplicationRenderer::Start()
 
 
     Model* Moon = new Model("Models/Exam_Models/3D_models/3D_models/CGI_Moon_Kit/UV_Sphere_Cylindrical_UIV_Projection_.ply");
-    Moon->transform.SetPosition(glm::vec3(30, 200, -200));
-    Moon->transform.SetScale(glm::vec3(20));
+    Moon->transform.SetPosition(glm::vec3(400, 200, -400));
+    Moon->transform.SetScale(glm::vec3(30));
     render.AddModelsAndShader(Moon, defaultShader);
 
 #pragma endregion
@@ -1152,7 +1153,7 @@ void ApplicationRenderer::Start()
     plane->transform.SetPosition(glm::vec3(0, 1, 0));
     plane->transform.SetRotation(glm::vec3(90, 0, 0));
 
-    render.AddModelsAndShader(plane, defaultShader);
+   // render.AddModelsAndShader(plane, defaultShader);
 
 
     Model* Torch = new Model("Models/Exam_Models/3D_models/3D_models/Torches/SM_Prop_Dwarf_Torch_06.ply");
@@ -1166,6 +1167,7 @@ void ApplicationRenderer::Start()
     glm::vec3 yOffset(0, 2, 0);
     torch1PointLight->transform.SetPosition(Torch->transform.position+ yOffset);
     torch1PointLight->transform.SetScale(glm::vec3(0.5f));
+    torch1PointLight->isVisible = false;
     render.AddModelsAndShader(torch1PointLight, lightShader);
 
     Light TorchLight1;
@@ -1195,6 +1197,7 @@ void ApplicationRenderer::Start()
     Model* torch2DebugModel = new Model(*Sphere);
     torch2DebugModel->transform.SetPosition(Torch2->transform.position + yOffset);
     torch2DebugModel->transform.SetScale(glm::vec3(0.5f));
+    torch2DebugModel->isVisible = false;
     render.AddModelsAndShader(torch2DebugModel, lightShader);
 
     Light TorchLight2;
@@ -1225,14 +1228,15 @@ void ApplicationRenderer::Start()
     Model* torch3DebugModel = new Model(*Sphere);
     torch3DebugModel->transform.SetPosition(Torch3->transform.position + yOffset);
     torch3DebugModel->transform.SetScale(glm::vec3(0.5f));
+    torch3DebugModel->isVisible = false;
     render.AddModelsAndShader(torch3DebugModel, lightShader);
 
     Light TorchLight3;
     TorchLight3.Initialize(torch3DebugModel, POINT_LIGHT, 0.5f);
     TorchLight3.SetColor(glm::vec4(1, 0.5f, 0, 1));
-    TorchLight3.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
-    TorchLight3.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
-    TorchLight3.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight3.ambient = glm::vec4(2, 2, 2, 1);
+    TorchLight3.diffuse = glm::vec4(2, 2, 2, 1);
+    TorchLight3.specular = glm::vec4(2, 2, 2, 1);
     TorchLight3.quadratic = 0.01f;
     TorchLight3.SetColor(1, 0.6f, 0.2, 1);
     lightManager.AddNewLight(TorchLight3);
@@ -1254,15 +1258,16 @@ void ApplicationRenderer::Start()
     Model* torch4DebugModel = new Model(*Sphere);
     torch4DebugModel->transform.SetPosition(Torch4->transform.position + yOffset);
     torch4DebugModel->transform.SetScale(glm::vec3(0.5f));
+    torch4DebugModel->isVisible = false;
     render.AddModelsAndShader(torch4DebugModel, lightShader);
 
     Light TorchLight4;
     TorchLight4.Initialize(torch4DebugModel, POINT_LIGHT, 0.5f);
     TorchLight4.SetColor(glm::vec4(1, 0.5f, 0, 1));
 
-    TorchLight4.ambient = glm::vec4(0.8f, 0.8f, 0.8f, 1);
-    TorchLight4.diffuse = glm::vec4(0.8f, 0.8f, 0.8f, 1);
-    TorchLight4.specular = glm::vec4(0.8f, 0.8f, 0.8f, 1);
+    TorchLight4.ambient = glm::vec4(2, 2, 2, 1);
+    TorchLight4.diffuse = glm::vec4(2, 2, 2, 1);
+    TorchLight4.specular = glm::vec4(2, 2, 2, 1);
     TorchLight4.quadratic = 0.01f;
     TorchLight4.SetColor(1, 0.6f, 0.2, 1);
 
@@ -1284,6 +1289,8 @@ void ApplicationRenderer::Start()
     Model* torch5DebugModel = new Model(*Sphere);
     torch5DebugModel->transform.SetPosition(Torch5->transform.position + yOffset);
     torch5DebugModel->transform.SetScale(glm::vec3(0.5f));
+
+    torch5DebugModel->isVisible = false;
     render.AddModelsAndShader(torch5DebugModel, lightShader);
 
     Light TorchLight5;
@@ -1317,6 +1324,7 @@ void ApplicationRenderer::Start()
     Model* torch6DebugModel = new Model(*Sphere);
     torch6DebugModel->transform.SetPosition(Torch6->transform.position + yOffset);
     torch6DebugModel->transform.SetScale(glm::vec3(0.5f));
+    torch6DebugModel->isVisible = false;
     render.AddModelsAndShader(torch6DebugModel, lightShader);
 
     Light TorchLight6;
@@ -1347,6 +1355,7 @@ void ApplicationRenderer::Start()
     Model* torch7DebugModel = new Model(*Sphere);
     torch7DebugModel->transform.SetPosition(Torch7->transform.position + yOffset);
     torch7DebugModel->transform.SetScale(glm::vec3(0.5f));
+    torch7DebugModel->isVisible = false;
     render.AddModelsAndShader(torch7DebugModel, lightShader);
 
     Light TorchLight7;
@@ -1377,6 +1386,8 @@ void ApplicationRenderer::Start()
     Model* torch8DebugModel = new Model(*Sphere);
     torch8DebugModel->transform.SetPosition(Torch8->transform.position + yOffset);
     torch8DebugModel->transform.SetScale(glm::vec3(0.5f));
+    torch8DebugModel->isVisible = false;
+
     render.AddModelsAndShader(torch8DebugModel, lightShader);
 
     Light TorchLight8;
@@ -1408,7 +1419,7 @@ void ApplicationRenderer::Start()
     torch9DebugModel->transform.SetPosition(Torch9->transform.position + yOffset);
     torch9DebugModel->transform.SetScale(glm::vec3(0.5f));
 
-
+    torch9DebugModel->isVisible = false;
     render.AddModelsAndShader(torch9DebugModel, lightShader);
 
     Light TorchLight9;
@@ -1426,7 +1437,7 @@ void ApplicationRenderer::Start()
 
     FireScale* fire9 = new FireScale(render, defaultShader, FireTexture);
 
-    fire9->LoadModel(plane, torch8DebugModel->transform.position);
+    fire9->LoadModel(plane, torch9DebugModel->transform.position);
 
     ListfireBehaviour.push_back(fire9);
 
@@ -1455,22 +1466,22 @@ void ApplicationRenderer::Start()
     directionLightModel->transform.SetPosition(glm::vec3(Moon->transform.position));
     directionLightModel->transform.SetRotation(glm::vec3(0, 0, 0));
     directionLightModel->transform.SetScale(glm::vec3(0.1f));
-
-    Light directionLight;
-    directionLight.lightType = LightType::POINT_LIGHT;
-    directionLight.lightModel = directionLightModel;
-    directionLight.ambient =  glm::vec4(50, 50, 50, 1.0f);
-    directionLight.diffuse =  glm::vec4(30, 30, 30, 1.0f);
-    directionLight.specular = glm::vec4(30, 30, 30, 1.0f);
-    directionLight.quadratic = 0.001f;
-    directionLight.intensity = 0.75f;
+    directionLightModel->isVisible = false;
+    Light MoonLight;
+    MoonLight.lightType = LightType::POINT_LIGHT;
+    MoonLight.lightModel = directionLightModel;
+    MoonLight.ambient =  glm::vec4(50, 50, 50, 1.0f);
+    MoonLight.diffuse =  glm::vec4(50, 50, 50, 1.0f);
+    MoonLight.specular = glm::vec4(50, 50, 50, 1.0f);
+    MoonLight.quadratic = 0.01f;
+    MoonLight.intensity = 0.75f;
 
 
     Model* beholderSpotLight1Model = new Model(*Sphere);
     beholderSpotLight1Model->transform.SetPosition(glm::vec3(0));
     beholderSpotLight1Model->transform.SetRotation(glm::vec3(0, 0, 0));
     beholderSpotLight1Model->transform.SetScale(glm::vec3(0.1f));
-
+    beholderSpotLight1Model->isVisible = false;
     render.AddModelsAndShader(beholderSpotLight1Model, lightShader);
 
     Light beholderSpotLight1;
@@ -1491,6 +1502,7 @@ void ApplicationRenderer::Start()
     beholderSpotLight1Model2->transform.SetPosition(glm::vec3(0));
     beholderSpotLight1Model2->transform.SetRotation(glm::vec3(0, 0, 0));
     beholderSpotLight1Model2->transform.SetScale(glm::vec3(0.1f));
+    beholderSpotLight1Model2->isVisible = false;
 
     render.AddModelsAndShader(beholderSpotLight1Model2, lightShader);
 
@@ -1514,7 +1526,7 @@ void ApplicationRenderer::Start()
     beholderSpotLight1Model3->transform.SetPosition(glm::vec3(0));
     beholderSpotLight1Model3->transform.SetRotation(glm::vec3(0, 0, 0));
     beholderSpotLight1Model3->transform.SetScale(glm::vec3(0.1f));
-
+    beholderSpotLight1Model3->isVisible = false;
     render.AddModelsAndShader(beholderSpotLight1Model3, lightShader);
 
     Light beholderSpotLight3;
@@ -1606,7 +1618,7 @@ void ApplicationRenderer::Start()
      //LightRenderer
 
 
-     lightManager.AddNewLight(directionLight);
+     lightManager.AddNewLight(MoonLight);
      
    
 
