@@ -21,6 +21,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include "FireBehaviour.h"
+#include "Beholder.h";
 
 struct ModelData
 {

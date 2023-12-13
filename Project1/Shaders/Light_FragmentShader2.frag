@@ -93,7 +93,7 @@ void main()
 
     
 
-      if (isCutout)
+     // if (isCutout)
      {
       
          if (cutOff.a < 0.1)
@@ -284,7 +284,7 @@ vec4 CalculateLight(vec3 norm, vec3 viewDir )
        }
 
     }
-     if (isMasking)
+     //if (isMasking)
      {
     // temp = texture(alphaMask, TextureCoordinates).r;
        result.w = texture(opacity_Texture, TextureCoordinates).r;

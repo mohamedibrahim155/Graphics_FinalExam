@@ -187,16 +187,95 @@ void ApplicationRenderer::Start()
 
 #pragma region MODEL_LOADING
 
-    Model* terrain = new Model("Models/Exam_Models/Terrain.ply");
-    terrain->transform.SetPosition(glm::vec3(0, 0, 80));
-    render.AddModelsAndShader(terrain, defaultShader);
+
+#pragma region TERRAIN
+
+
+      Model* terrain = new Model("Models/Exam_Models/Terrain.ply");
+      terrain->transform.SetPosition(glm::vec3(0, 0, 80));
+      render.AddModelsAndShader(terrain, defaultShader);
+     
+
+      std::string waterTerrainTexurePath = "Models/Exam_Models/Water.png";
+      Texture* waterAlphaTexture = new Texture(waterTerrainTexurePath);
+      Model* waterTerrain = new Model("Models/Exam_Models/Water_Terrain.ply");
+     
+
+      waterAlphaTexture->type = "opacity_Texture";
+     waterTerrain->meshes[0]->meshMaterial->diffuseTexture = waterAlphaTexture;
+     waterTerrain->meshes[0]->meshMaterial->alphaTexture = waterAlphaTexture;
+
+      waterTerrain->transform.SetPosition(glm::vec3(-5.60f, 2.9f, -38.5f));
+      waterTerrain->transform.SetRotation(glm::vec3(90,90,0));
+      waterTerrain->transform.SetScale(glm::vec3(0.1f));
+      render.AddTransparentModels(waterTerrain, defaultShader);
+
+
+     
+#pragma endregion
+
+ 
+    #pragma region Crystals
+
+
+      std::string crystaltexturePath= "Models/Exam_Models/3D_models/3D_models/Crystals/Crystal.jpg";
+    
+      Texture* crystalsTexture = new Texture(crystaltexturePath);
+
+
+      
+      Model* crystal = new Model("Models/Exam_Models/3D_models/3D_models/Crystals/SM_Env_Crystals_Cluster_Large_03.ply");
+
+      crystalsTexture->type = "diffuse_Texture";
+      crystal->meshes[0]->meshMaterial->diffuseTexture = crystalsTexture;
+      crystalsTexture->type = "opacity_Texture";
+      crystal->meshes[0]->meshMaterial->alphaTexture = crystalsTexture;
+
+      crystal->transform.SetPosition(glm::vec3(0, 1, 0));
+      crystal->transform.SetScale(glm::vec3(0.0125f));
+
+
+      render.AddTransparentModels(crystal, defaultShader);
+
+      Model* crystal2 = new Model(*crystal);
+      crystal2->transform.SetPosition(glm::vec3(0, 1, 0));
+      crystal2->transform.SetScale(glm::vec3(0.0125f));
+
+      crystalsTexture->type = "diffuse_Texture";
+      crystal2->meshes[0]->meshMaterial->diffuseTexture = crystalsTexture;
+      crystalsTexture->type = "opacity_Texture";
+      crystal2->meshes[0]->meshMaterial->alphaTexture = crystalsTexture;
+
+      render.AddTransparentModels(crystal2, defaultShader);
+
+      Model* crystal3 = new Model(*crystal);
+      crystal3->transform.SetPosition(glm::vec3(0, 1, 0));
+      crystal3->transform.SetScale(glm::vec3(0.0125f));
+
+      crystalsTexture->type = "diffuse_Texture";
+      crystal3->meshes[0]->meshMaterial->diffuseTexture = crystalsTexture;
+      crystalsTexture->type = "opacity_Texture";
+      crystal3->meshes[0]->meshMaterial->alphaTexture = crystalsTexture;
+
+      render.AddTransparentModels(crystal3, defaultShader);
+
+      testModel = crystal;
+      isTestingModel = true;
+
+    #pragma endregion
+
+
+     #pragma region MOON
+
+
+
 
     Model* Moon = new Model("Models/Exam_Models/3D_models/3D_models/CGI_Moon_Kit/UV_Sphere_Cylindrical_UIV_Projection_.ply");
     Moon->transform.SetPosition(glm::vec3(30, 200, -200));
     Moon->transform.SetScale(glm::vec3(20));
     render.AddModelsAndShader(Moon, defaultShader);
 
-
+#pragma endregion
 
 
     #pragma region Floors
@@ -1061,7 +1140,7 @@ void ApplicationRenderer::Start()
 
 #pragma endregion
 
-#pragma region Torches
+    #pragma region Torches
 
     Model* plane = new Model("Models/Plane/Plane.obj");
     std::string texurepath = "Models/Plane/Fire.png";
@@ -1354,6 +1433,15 @@ void ApplicationRenderer::Start()
 #pragma endregion
 
 
+#pragma region BEHOLDER
+
+    Beholder* beholder = new Beholder(&render, defaultShader);
+
+    beholder->LoadBeholderModel();
+#pragma endregion
+
+
+
 #pragma endregion
 
 
@@ -1375,7 +1463,31 @@ void ApplicationRenderer::Start()
     directionLight.quadratic = 0.001f;
     directionLight.intensity = 0.75f;
 
+
+    Model* beholderSpotLight1Model = new Model(*Sphere);
+    beholderSpotLight1Model->transform.SetPosition(glm::vec3(Moon->transform.position));
+    beholderSpotLight1Model->transform.SetRotation(glm::vec3(0, 0, 0));
+    beholderSpotLight1Model->transform.SetScale(glm::vec3(0.1f));
+
+    render.AddModelsAndShader(beholderSpotLight1Model, lightShader);
+
+    Light beholderSpotLight1;
+    beholderSpotLight1.Initialize(beholderSpotLight1Model, SPOT_LIGHT, 0.75f);
+    beholderSpotLight1.ambient = glm::vec4(2, 2, 2, 1.0f);
+    beholderSpotLight1.diffuse = glm::vec4(2, 2, 2, 1.0f);
+    beholderSpotLight1.specular = glm::vec4(2, 2, 2, 1.0f);
+    beholderSpotLight1.quadratic = 0.001f;
+    beholderSpotLight1.linear = 0.001f;
+    beholderSpotLight1.constant = 0.001f;
+    beholderSpotLight1.cutOffAngle = 12.5f;
+    beholderSpotLight1.outerCutOffAngle = 15;
+    
+    lightManager.AddNewLight(beholderSpotLight1);
+   
+
 #pragma endregion
+
+
 
 
      render.selectedModel = nullptr;
